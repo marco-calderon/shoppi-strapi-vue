@@ -2,16 +2,11 @@
 import { useQuery } from "@vue/apollo-composable";
 import type { CategoryModel } from "@/models/Category.model";
 import gql from "graphql-tag";
-import ProductItem from "./CategoryItem.vue";
+import ProductItem from "./ProductItem.vue";
 import { computed } from "vue";
 import type { ProductModel } from "@/models/Product.model";
 
 export default {
-  data() {
-    return {
-      categories: [] as CategoryModel[],
-    };
-  },
   props: {
     categoryId: Number,
   },
@@ -25,19 +20,12 @@ export default {
               attributes {
                 name
                 description
+                price
                 discount
                 image {
                   data {
                     attributes {
                       url
-                    }
-                  }
-                }
-                category {
-                  data {
-                    id
-                    attributes {
-                      name
                     }
                   }
                 }
@@ -91,12 +79,17 @@ export default {
     };
   },
   components: { ProductItem },
+  methods: {
+    productClick(product: ProductModel) {
+      console.log(product);
+    },
+  },
 };
 </script>
 
 <template>
   <div class="flex flex-col gap-6">
-    <h3 class="text-2xl font-bold">{{ category?.attributes.name }}</h3>
+    <h3 class="mb-4 text-4xl font-bold">{{ category?.attributes.name }}</h3>
 
     <div class="grid gap-8 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-2">
       <ProductItem
@@ -105,6 +98,9 @@ export default {
         :name="product.attributes.name"
         :description="product.attributes.description"
         :url="product.attributes.image.data.attributes.url"
+        :price="product.attributes.price ?? 0"
+        :discount="product.attributes.discount ?? 0"
+        @click="productClick(product)"
       />
     </div>
   </div>

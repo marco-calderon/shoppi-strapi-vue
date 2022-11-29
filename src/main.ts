@@ -1,25 +1,24 @@
-import { createApp } from "vue";
+import { createApp, h, provide } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import { ApolloClient, InMemoryCache } from "@apollo/client/core";
-import { createApolloProvider } from "@vue/apollo-option";
+import { DefaultApolloClient } from "@vue/apollo-composable";
+import "./assets/main.css";
 
 const cache = new InMemoryCache();
 
 const apolloClient = new ApolloClient({
   cache,
-  uri: "https://still-rain-3600.fly.dev/graphql",
+  uri: `${import.meta.env.VITE_STRAPI_ENDPOINT}/graphql`,
 });
 
-const apolloProvider = createApolloProvider({
-  defaultClient: apolloClient,
+const app = createApp({
+  setup() {
+    provide(DefaultApolloClient, apolloClient);
+  },
+  render: () => h(App),
 });
-
-import "./assets/main.css";
-
-const app = createApp(App);
 
 app.use(router);
-app.use(apolloProvider);
 
 app.mount("#app");

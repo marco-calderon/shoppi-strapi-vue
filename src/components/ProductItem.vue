@@ -1,11 +1,14 @@
 <script setup lang="ts">
-export interface CategoryItemProps {
+export interface ProductItemProps {
   name: string;
   description: string;
   url: string;
+  price: number;
+  discount: number;
+  category: string;
 }
 
-defineProps<CategoryItemProps>();
+defineProps<ProductItemProps>();
 </script>
 
 <template lang="">

@@ -14,6 +14,16 @@ const router = createRouter({
       name: "about",
       component: () => import("../views/AboutView.vue"),
     },
+    {
+      path: "/categories",
+      name: "categories",
+      component: () => import("../views/CategoriesView.vue"),
+    },
+    {
+      path: "/categories/:id",
+      name: "products-category",
+      component: () => import("../views/CategoryView.vue"),
+    },
   ],
 });
 

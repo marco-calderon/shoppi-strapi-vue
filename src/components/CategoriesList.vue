@@ -1,23 +1,21 @@
 <script lang="ts">
-import type { CategoryModel } from "@/models/Category.model";
+import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 import CategoryItem from "./CategoryItem.vue";
+import { computed } from "vue";
+import type { CategoryModel } from "@/models/Category.model";
 
 export default {
-  data() {
-    return {
-      categories: [] as CategoryModel[],
-    };
-  },
-  apollo: {
-    categories: {
-      query: gql`
+  setup() {
+    const { result } = useQuery(
+      gql`
         {
           categories {
             data {
               id
               attributes {
                 name
+                description
                 cover {
                   data {
                     id
@@ -26,23 +24,28 @@ export default {
                     }
                   }
                 }
-                products {
-                  data {
-                    id
-                    attributes {
-                      name
-                    }
-                  }
-                }
               }
             }
           }
         }
-      `,
-      update: (data) => data.categories.data,
-    },
+      `
+    );
+
+    const categories = computed<CategoryModel[]>(
+      () => result.value?.categories?.data ?? []
+    );
+
+    return {
+      categories,
+    };
   },
   components: { CategoryItem },
+  methods: {
+    categoryClick(category: CategoryModel) {
+      console.log(category);
+      this.$router.push(`/categories/${category.id}`);
+    },
+  },
 };
 </script>
 
@@ -57,6 +60,7 @@ export default {
         :name="category.attributes.name"
         :description="category.attributes.description"
         :url="category.attributes.cover.data.attributes.url"
+        @click="categoryClick(category)"
       />
     </div>
   </div>

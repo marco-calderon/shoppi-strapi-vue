@@ -94,7 +94,7 @@ function productClick(product: ProductModel) {
   <!-- Search modal -->
   <!-- Overlay -->
   <div
-    :class="`absolute left-0 right-0 flex flex-col items-center top-0 bottom-0 bg-gray-900/60 z-50 ${
+    :class="`fixed left-0 right-0 flex flex-col items-center top-0 bottom-0 bg-gray-900/60 z-50 ${
       focused ? 'visible' : 'hidden'
     }`"
   >
@@ -130,7 +130,7 @@ function productClick(product: ProductModel) {
   <Presence>
     <Motion
       v-show="cartModal"
-      class="absolute top-20 py-4 right-4 flex flex-col z-60 items-center mt-4 z-50 bg-white rounded-lg dark:bg-gray-700 w-[350px] min-h-24"
+      class="fixed top-20 py-4 right-4 flex flex-col z-60 items-center mt-4 z-50 bg-white rounded-lg dark:bg-gray-700 w-[350px] min-h-24"
       :animate="{ opacity: 1 }"
       :exit="{ opacity: 0 }"
       v-on-click-outside="closeCart"
@@ -184,7 +184,7 @@ function productClick(product: ProductModel) {
 
   <TransitionGroup
     name="list"
-    class="absolute top-0 z-50 flex flex-col items-center w-full gap-4 mx-auto mt-4 pointer-events-none"
+    class="fixed top-0 z-50 flex flex-col items-center w-full gap-4 mx-auto mt-4 pointer-events-none"
     tag="ul"
   >
     <li

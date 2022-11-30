@@ -161,6 +161,7 @@ function productClick(product: ProductModel) {
         <button
           type="button"
           class="flex flex-row items-center gap-4 px-6 py-4 mt-8 text-white transition-all bg-blue-500 rounded-full hover:bg-blue-400"
+          @click="router.push('/checkout')"
         >
           <Icon icon="icon-park-twotone:check-one" class="text-lg" />
           Checkout

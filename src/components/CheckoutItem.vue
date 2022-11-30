@@ -7,13 +7,14 @@
       alt="props.name"
       class="object-cover w-12 h-12 rounded-md"
     />
-    <h4 class="text-lg">{{ props.name }}</h4>
+    <h4 class="text-lg">{{ props.name }} - {{ formatPice(props.price) }}</h4>
   </div>
 </template>
 <script setup lang="ts">
+import { formatPice } from '@/utils/format.utils';
 export interface SearchResultProps {
   name: string;
-  price: string;
+  price: number;
   url: string;
 }
 const props = defineProps<SearchResultProps>();

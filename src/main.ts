@@ -4,7 +4,8 @@ import router from "./router";
 import { ApolloClient, InMemoryCache } from "@apollo/client/core";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 import "./assets/main.css";
-import VueClosable from "vue-closable";
+import { createPinia } from "pinia";
+import { MotionPlugin } from "@vueuse/motion";
 
 const cache = new InMemoryCache();
 
@@ -12,6 +13,8 @@ const apolloClient = new ApolloClient({
   cache,
   uri: `${import.meta.env.VITE_STRAPI_ENDPOINT}/graphql`,
 });
+
+const pinia = createPinia();
 
 const app = createApp({
   setup() {
@@ -21,5 +24,6 @@ const app = createApp({
 });
 
 app.use(router);
-app.use(VueClosable);
+app.use(pinia);
+app.use(MotionPlugin);
 app.mount("#app");

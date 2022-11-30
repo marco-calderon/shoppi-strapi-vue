@@ -10,6 +10,9 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
+      marked: fileURLToPath(
+        new URL("./node_modules/marked/bin/marked.js", import.meta.url)
+      ),
     },
   },
 });

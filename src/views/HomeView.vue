@@ -6,7 +6,7 @@ import CategoriesList from "@/components/CategoriesList.vue";
   <main class="flex flex-col gap-4 p-8">
     <!-- Hero component -->
     <div
-      class="flex flex-row items-center px-12 text-gray-600 rounded-3xl bg-gradient-to-r from-lime-400 to-lime-700 h-72"
+      class="flex flex-row items-center px-12 text-gray-600 rounded-3xl bg-gradient-to-r from-lime-400 to-lime-700 h-[600px]"
     >
       <div class="flex flex-col items-start">
         <h1 class="text-6xl font-bold text-gray-700">55% Discount</h1>
@@ -14,6 +14,6 @@ import CategoriesList from "@/components/CategoriesList.vue";
       </div>
     </div>
 
-    <CategoriesList />
+    <CategoriesList class="mt-8" />
   </main>
 </template>

@@ -5,6 +5,7 @@ export interface ProductModel {
     description: string;
     price: number;
     discount: number;
+    points: string;
     image: {
       data: {
         id: number;

@@ -1,90 +1,83 @@
-<script lang="ts">
+<script setup lang="ts">
 import { useQuery } from "@vue/apollo-composable";
 import type { CategoryModel } from "@/models/Category.model";
 import gql from "graphql-tag";
 import ProductItem from "./ProductItem.vue";
 import { computed } from "vue";
 import type { ProductModel } from "@/models/Product.model";
+import { useRouter } from "vue-router";
 
-export default {
-  props: {
-    categoryId: Number,
-  },
-  setup(props) {
-    const { result } = useQuery(
-      gql`
-        query productsByCategory($categoryId: ID) {
-          products(filters: { category: { id: { eq: $categoryId } } }) {
-            data {
-              id
-              attributes {
-                name
-                description
-                price
-                discount
-                image {
-                  data {
-                    attributes {
-                      url
-                    }
-                  }
+export interface ProductsListProps {
+  categoryId: number;
+}
+
+const props = defineProps<ProductsListProps>();
+const router = useRouter();
+const { result } = useQuery(
+  gql`
+    query productsByCategory($categoryId: ID) {
+      products(filters: { category: { id: { eq: $categoryId } } }) {
+        data {
+          id
+          attributes {
+            name
+            description
+            price
+            discount
+            image {
+              data {
+                attributes {
+                  url
                 }
               }
             }
           }
         }
-      `,
-      {
-        categoryId: props.categoryId,
       }
-    );
+    }
+  `,
+  {
+    categoryId: props.categoryId,
+  }
+);
 
-    const { result: categoryResult } = useQuery(
-      gql`
-        query category($categoryId: ID) {
-          category(id: $categoryId) {
-            data {
-              id
-              attributes {
-                name
-                description
-                cover {
-                  data {
-                    id
-                    attributes {
-                      url
-                    }
-                  }
+const { result: categoryResult } = useQuery(
+  gql`
+    query category($categoryId: ID) {
+      category(id: $categoryId) {
+        data {
+          id
+          attributes {
+            name
+            description
+            cover {
+              data {
+                id
+                attributes {
+                  url
                 }
               }
             }
           }
         }
-      `,
-      {
-        categoryId: props.categoryId,
       }
-    );
+    }
+  `,
+  {
+    categoryId: props.categoryId,
+  }
+);
 
-    const products = computed<ProductModel[]>(
-      () => result.value?.products?.data ?? []
-    );
-    const category = computed<CategoryModel>(
-      () => categoryResult.value?.category?.data
-    );
+const products = computed<ProductModel[]>(
+  () => result.value?.products?.data ?? []
+);
+const category = computed<CategoryModel>(
+  () => categoryResult.value?.category?.data
+);
 
-    return {
-      products,
-      category,
-    };
-  },
-  components: { ProductItem },
-  methods: {
-    productClick(product: ProductModel) {
-      console.log(product);
-    },
-  },
-};
+function productClick(product: ProductModel) {
+  router.push(`/products/${product.id}`);
+}
 </script>
 
 <template>

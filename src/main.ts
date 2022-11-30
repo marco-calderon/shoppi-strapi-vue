@@ -4,6 +4,7 @@ import router from "./router";
 import { ApolloClient, InMemoryCache } from "@apollo/client/core";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 import "./assets/main.css";
+import VueClosable from "vue-closable";
 
 const cache = new InMemoryCache();
 
@@ -20,5 +21,5 @@ const app = createApp({
 });
 
 app.use(router);
-
+app.use(VueClosable);
 app.mount("#app");

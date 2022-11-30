@@ -2,7 +2,7 @@
   <div
     class="fixed z-10 flex flex-row items-center justify-between w-full px-16 py-8 overflow-hidden bg-gray-200/30 backdrop-blur-md dark:bg-gray-900/60"
   >
-    <h1 class="text-2xl font-bold text-white" @click="$emit('logoClick')">
+    <h1 class="text-2xl font-bold text-white cursor-pointer" @click="$emit('logoClick')">
       Odyssey
     </h1>
 
@@ -25,8 +25,15 @@
       </div>
     </div>
 
-    <div></div>
+    <div class="flex flex-row items-center gap-2">
+      <IconButton>
+        <Icon icon="icon-park-twotone:shopping" class="text-2xl text-white dark:text-gray-300" />
+      </IconButton>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Icon } from '@iconify/vue';
+import IconButton from './IconButton.vue';
+</script>

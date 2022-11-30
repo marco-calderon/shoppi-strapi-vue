@@ -61,7 +61,7 @@ function productClick(product: ProductModel) {
 
 <template>
   <div class="flex flex-col w-full bg-gray-200 dark:bg-gray-900">
-    <NavbarComponent @on-search="focused = true" />
+    <NavbarComponent @on-search="focused = true" @logo-click="router.push('/')" />
     <div class="mt-24">
       <slot />
     </div>

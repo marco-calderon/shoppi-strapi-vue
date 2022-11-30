@@ -39,6 +39,7 @@ const { result } = useQuery(
             description
             price
             discount
+            points
             image {
               data {
                 attributes {

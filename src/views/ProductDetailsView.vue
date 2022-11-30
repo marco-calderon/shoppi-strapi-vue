@@ -8,8 +8,10 @@ import { formatPice } from "@/utils/format.utils";
 import { marked } from "marked";
 import { Icon } from "@iconify/vue";
 import { useCartStore } from "@/store/useCartStore";
+import { useNotificationStore } from "@/store/useNotificationStore";
 
 const store = useCartStore();
+const notificationStore = useNotificationStore();
 
 const mapLevelToClass = (level: number) => {
   switch (level) {
@@ -88,6 +90,10 @@ const pointsRendered = computed(() =>
 
 function addToCart() {
   store.items.push(product.value);
+  notificationStore.addNotification(
+    `${product.value.attributes.name} was added to cart!`,
+    "Continue shopping"
+  );
 }
 </script>
 

@@ -76,10 +76,10 @@ markerRef.value.use({
 const product = computed<ProductModel>(() => result.value?.product?.data);
 const price = computed(() => formatPice(product?.value?.attributes.price));
 const rendered = computed(() =>
-  markerRef.value(product?.value?.attributes.description)
+  markerRef.value(product?.value?.attributes.description ?? "")
 );
 const pointsRendered = computed(() =>
-  markerRef.value(product?.value?.attributes.points)
+  markerRef.value(product?.value?.attributes.points ?? "")
 );
 </script>
 

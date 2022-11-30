@@ -8,10 +8,15 @@ import { computed, ref } from "vue";
 import { vOnClickOutside } from "@vueuse/components";
 import SearchResult from "./SearchResult.vue";
 import { useRouter } from "vue-router";
+import { Motion, Presence } from "motion/vue";
+import CartItem from "./CartItem.vue";
+import { useCartStore } from "@/store/useCartStore";
 
 const router = useRouter();
 const searchTerm = ref("");
 const focused = ref(false);
+const cartModal = ref(false);
+const store = useCartStore();
 const { result } = useQuery(
   gql`
     query searchProduct($nameLike: String) {
@@ -53,6 +58,10 @@ function closeModal() {
   focused.value = false;
 }
 
+function closeCart() {
+  cartModal.value = false;
+}
+
 function productClick(product: ProductModel) {
   router.push(`/products/${product.id}`);
   focused.value = false;
@@ -61,7 +70,11 @@ function productClick(product: ProductModel) {
 
 <template>
   <div class="flex flex-col w-full bg-gray-200 dark:bg-gray-900">
-    <NavbarComponent @on-search="focused = true" @logo-click="router.push('/')" />
+    <NavbarComponent
+      @on-search="focused = true"
+      @logo-click="router.push('/')"
+      @cart-click="cartModal = true"
+    />
     <div class="mt-24">
       <slot />
     </div>
@@ -99,4 +112,27 @@ function productClick(product: ProductModel) {
       </div>
     </div>
   </div>
+
+  <!-- Cart modal -->
+  <Presence>
+    <Motion
+      v-show="cartModal"
+      class="absolute top-20 py-4 right-4 flex flex-col z-60 items-center mt-4 z-50 bg-white rounded-lg dark:bg-gray-700 w-[350px] h-24"
+      :animate="{ opacity: 1 }"
+      :exit="{ opacity: 0 }"
+      v-on-click-outside="closeCart">
+      <h3 class="text-lg">Your cart</h3>
+
+      <div class="flex flex-col items-center w-full pb-4">
+        <CartItem
+          v-for="product in store.items"
+          :key="product.id"
+          :name="product.attributes.name"
+          :price="product.attributes.price"
+          :url="product.attributes.image.data.attributes.url"
+          @remove="store.removeFromCart(product.id)"
+        />
+      </div>
+    </Motion>
+  </Presence>
 </template>

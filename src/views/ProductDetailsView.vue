@@ -7,6 +7,9 @@ import { useRoute } from "vue-router";
 import { formatPice } from "@/utils/format.utils";
 import { marked } from "marked";
 import { Icon } from "@iconify/vue";
+import { useCartStore } from "@/store/useCartStore";
+
+const store = useCartStore();
 
 const mapLevelToClass = (level: number) => {
   switch (level) {
@@ -82,6 +85,10 @@ const rendered = computed(() =>
 const pointsRendered = computed(() =>
   markerRef.value(product?.value?.attributes.points ?? "")
 );
+
+function addToCart() {
+  store.items.push(product.value);
+}
 </script>
 
 <template>
@@ -109,6 +116,7 @@ const pointsRendered = computed(() =>
             <button
               type="button"
               class="flex flex-row items-center gap-4 px-6 py-4 text-xl font-bold text-gray-800 bg-yellow-400 rounded-full shadow-lg shadow-yellow-200/50"
+              @click="addToCart"
             >
               <Icon icon="ic:sharp-shopping-cart" />
               Add to cart

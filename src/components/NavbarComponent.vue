@@ -26,7 +26,7 @@
     </div>
 
     <div class="flex flex-row items-center gap-2">
-      <IconButton>
+      <IconButton @click="$emit('cartClick')">
         <Icon icon="icon-park-twotone:shopping" class="text-2xl text-white dark:text-gray-300" />
       </IconButton>
     </div>

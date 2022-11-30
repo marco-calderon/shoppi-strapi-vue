@@ -2,7 +2,7 @@
 export interface IconButtonProps {
   class?: string;
 }
-defineProps<IconButtonProps>();
+const props = defineProps<IconButtonProps>();
 </script>
 <template lang="">
   <button
